@@ -67,12 +67,11 @@ final class CameraViewController: UIViewController {
                 self.view.layer.addSublayer(videoLayer)
 
                 // recording button
-                self.recordButton = UIButton(frame: CGRect(x: 0, y: 0, width: 120, height: 50))
-                self.recordButton.backgroundColor = UIColor.gray
+                self.recordButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+                self.recordButton.backgroundColor = .white
                 self.recordButton.layer.masksToBounds = true
-                self.recordButton.setTitle("Record", for: .normal)
-                self.recordButton.layer.cornerRadius = 20
-                self.recordButton.layer.position = CGPoint(x: self.view.bounds.width / 2, y:self.view.bounds.height - 100)
+                self.recordButton.layer.cornerRadius = 80 / 2
+                self.recordButton.layer.position = CGPoint(x: self.view.bounds.width / 2, y:self.view.bounds.height - 120)
                 self.recordButton.addTarget(self, action: #selector(self.onClickRecordButton(sender:)), for: .touchUpInside)
                 self.view.addSubview(recordButton)
     }
@@ -82,8 +81,7 @@ final class CameraViewController: UIViewController {
                 // stop recording
                 fileOutput.stopRecording()
 
-                self.recordButton.backgroundColor = .gray
-                self.recordButton.setTitle("Record", for: .normal)
+                self.recordButton.backgroundColor = .white
             } else {
                 // start recording
                 let tempDirectory: URL = URL(fileURLWithPath: NSTemporaryDirectory())
@@ -91,7 +89,6 @@ final class CameraViewController: UIViewController {
                 fileOutput.startRecording(to: fileURL, recordingDelegate: self)
 
                 self.recordButton.backgroundColor = .red
-                self.recordButton.setTitle("●Recording", for: .normal)
             }
     }
 }
