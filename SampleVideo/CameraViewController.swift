@@ -27,6 +27,8 @@ final class CameraViewController: UIViewController {
     
     private var recordButton: UIButton!
     
+    var videoURL: URL?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -88,18 +90,10 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         
-        //動画をシェア
-        let activityItems = [outputFileURL as Any, "#SampleVideo"] as [Any]
-        let activityController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-        
-        activityController.popoverPresentationController?.sourceView = self.view
-        activityController.popoverPresentationController?.sourceRect = self.view.frame
-        self.present(activityController, animated: true, completion: nil)
-        
         let storyboard = UIStoryboard(name: "Preview", bundle: nil)
         let previewViewController = storyboard.instantiateViewController(withIdentifier: "PreviewViewController") as! PreviewViewController
-        //        videoURL = url
-        //        previewViewController.url = videoURL
+        videoURL = outputFileURL
+        previewViewController.url = videoURL
         self.present(previewViewController, animated: true, completion: nil)
     }
 }
