@@ -11,22 +11,39 @@
         <!--Preview View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="PreviewViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="PreviewViewController" customModule="SampleVideo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PreviewViewController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="PreviewViewController" customModule="SampleVideo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8HH-Uv-b5A">
-                                <rect key="frame" x="192" y="433" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBlueColor"/>
-                                <connections>
-                                    <action selector="next:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="0Uz-Dh-K4x"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gus-eO-5OD">
+                                <rect key="frame" x="0.0" y="796" width="414" height="100"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8HH-Uv-b5A">
+                                        <rect key="frame" x="191.5" y="35" width="31" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" systemColor="systemBlueColor"/>
+                                        <state key="normal" title="次へ"/>
+                                        <connections>
+                                            <action selector="next:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="0Uz-Dh-K4x"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="8HH-Uv-b5A" firstAttribute="centerX" secondItem="gus-eO-5OD" secondAttribute="centerX" id="5fY-Ed-LZ3"/>
+                                    <constraint firstAttribute="height" constant="100" id="6S1-lf-7c6"/>
+                                    <constraint firstItem="8HH-Uv-b5A" firstAttribute="centerY" secondItem="gus-eO-5OD" secondAttribute="centerY" id="wq0-mb-I5W"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="gus-eO-5OD" secondAttribute="bottom" id="boT-kK-vRM"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="gus-eO-5OD" secondAttribute="trailing" id="hMH-N7-yjL"/>
+                            <constraint firstItem="gus-eO-5OD" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="qqi-f9-930"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

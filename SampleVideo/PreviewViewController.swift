@@ -17,6 +17,39 @@ final class PreviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = .black
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        videoPlayer(url: url!)
+    }
+    
+    func videoPlayer(url: URL) {
+        //ViewControllerを親から取り除く
+        playerController?.removeFromParent()
+        player = nil
+        player = AVPlayer(url: url)
+        self.player?.volume = 1
+        view.backgroundColor = .black
+        
+        playerController = AVPlayerViewController()
+        playerController?.videoGravity = .resizeAspectFill
+        playerController?.view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - 100)
+        playerController?.showsPlaybackControls = false
+        playerController?.player = player!
+        self.addChild(playerController!)
+        self.view.addSubview((playerController?.view)!)
+        
+        player?.play()
+        
+        _ = NotificationCenter.default.addObserver(
+                    forName: .AVPlayerItemDidPlayToEndTime,
+            object: player?.currentItem,
+                    queue: .main) { [weak playerController] _ in
+            playerController?.player?.seek(to: CMTime.zero)
+            playerController?.player?.play()
+                }
     }
     
     @IBAction func next(_ sender: Any) {
