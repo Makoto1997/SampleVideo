@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,10 @@
 		0E446A35266A954D008F5556 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E446A34266A954D008F5556 /* CameraViewController.swift */; };
 		0E446A37266A9572008F5556 /* Camera.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E446A36266A9572008F5556 /* Camera.storyboard */; };
 		0E446A39267102B5008F5556 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E446A38267102B5008F5556 /* GoogleService-Info.plist */; };
+		0EEA137A2677F4D9004DD506 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEA13792677F4D9004DD506 /* PreviewViewController.swift */; };
+		0EEA137C2677F4E7004DD506 /* Preview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EEA137B2677F4E7004DD506 /* Preview.storyboard */; };
+		0EEA137E2678BAA7004DD506 /* Post.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0EEA137D2678BAA7004DD506 /* Post.storyboard */; };
+		0EEA13802678BAB7004DD506 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EEA137F2678BAB7004DD506 /* PostViewController.swift */; };
 		381D2131A7E1CB8A0FBC9C50 /* Pods_SampleVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C8521C331CE46BA55A7C027 /* Pods_SampleVideo.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +31,10 @@
 		0E446A34266A954D008F5556 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		0E446A36266A9572008F5556 /* Camera.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Camera.storyboard; sourceTree = "<group>"; };
 		0E446A38267102B5008F5556 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0EEA13792677F4D9004DD506 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		0EEA137B2677F4E7004DD506 /* Preview.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preview.storyboard; sourceTree = "<group>"; };
+		0EEA137D2678BAA7004DD506 /* Post.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Post.storyboard; sourceTree = "<group>"; };
+		0EEA137F2678BAB7004DD506 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		9C8521C331CE46BA55A7C027 /* Pods_SampleVideo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleVideo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C82E439EB066BB177ED7E5E4 /* Pods-SampleVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleVideo.release.xcconfig"; path = "Target Support Files/Pods-SampleVideo/Pods-SampleVideo.release.xcconfig"; sourceTree = "<group>"; };
 		EABB8D0A25AD4E5B47C31E99 /* Pods-SampleVideo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleVideo.debug.xcconfig"; path = "Target Support Files/Pods-SampleVideo/Pods-SampleVideo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -69,6 +77,10 @@
 				0E446A22266A6EB4008F5556 /* SceneDelegate.swift */,
 				0E446A36266A9572008F5556 /* Camera.storyboard */,
 				0E446A34266A954D008F5556 /* CameraViewController.swift */,
+				0EEA137B2677F4E7004DD506 /* Preview.storyboard */,
+				0EEA13792677F4D9004DD506 /* PreviewViewController.swift */,
+				0EEA137D2678BAA7004DD506 /* Post.storyboard */,
+				0EEA137F2678BAB7004DD506 /* PostViewController.swift */,
 				0E446A29266A6EB4008F5556 /* Assets.xcassets */,
 				0E446A2B266A6EB4008F5556 /* LaunchScreen.storyboard */,
 				0E446A2E266A6EB4008F5556 /* Info.plist */,
@@ -83,7 +95,6 @@
 				EABB8D0A25AD4E5B47C31E99 /* Pods-SampleVideo.debug.xcconfig */,
 				C82E439EB066BB177ED7E5E4 /* Pods-SampleVideo.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -155,8 +166,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E446A39267102B5008F5556 /* GoogleService-Info.plist in Resources */,
+				0EEA137C2677F4E7004DD506 /* Preview.storyboard in Resources */,
 				0E446A2D266A6EB4008F5556 /* LaunchScreen.storyboard in Resources */,
 				0E446A37266A9572008F5556 /* Camera.storyboard in Resources */,
+				0EEA137E2678BAA7004DD506 /* Post.storyboard in Resources */,
 				0E446A2A266A6EB4008F5556 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,6 +226,8 @@
 				0E446A21266A6EB4008F5556 /* AppDelegate.swift in Sources */,
 				0E446A23266A6EB4008F5556 /* SceneDelegate.swift in Sources */,
 				0E446A35266A954D008F5556 /* CameraViewController.swift in Sources */,
+				0EEA137A2677F4D9004DD506 /* PreviewViewController.swift in Sources */,
+				0EEA13802678BAB7004DD506 /* PostViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,7 +13,8 @@ final class CameraViewController: UIViewController {
     // 入力デバイスから出力へのデータの流れを管理するクラス
     // セッションのインスタンス化
     private let captureSession = AVCaptureSession()
-    
+    // 出力形式を管理
+    let fileOutput = AVCaptureMovieFileOutput()
     // カメラデバイスそのものを管理するオブジェクトの作成
     // メインカメラの管理オブジェクトの作成
     var mainCamera: AVCaptureDevice?
@@ -21,18 +22,14 @@ final class CameraViewController: UIViewController {
     var innerCamera: AVCaptureDevice?
     // 現在使用しているカメラデバイスの管理オブジェクトの作成
     var currentDevice: AVCaptureDevice?
-    
-    // 出力形式を管理
-    private let fileOutput = AVCaptureMovieFileOutput()
-    
     // Capture Preview
     var capturePreviewLayer: AVCaptureVideoPreviewLayer?
     
     private var recordButton: UIButton!
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+        
         self.view.backgroundColor = .black
         self.setUpCamera()
     }
@@ -40,20 +37,16 @@ final class CameraViewController: UIViewController {
     // デバイスの設定
     private func setUpCamera() {
         
-        // デバイスの初期化
+        // デバイスの初期化・ビデオのインプット設定
         let videoDevice: AVCaptureDevice? = AVCaptureDevice.default(for: AVMediaType.video)
-        let audioDevice: AVCaptureDevice? = AVCaptureDevice.default(for: AVMediaType.audio)
-       
-        //ビデオの画質
-        captureSession.sessionPreset = AVCaptureSession.Preset.high
-        
-        // ビデオのインプット設定
         let videoInput: AVCaptureDeviceInput = try! AVCaptureDeviceInput(device: videoDevice!)
         captureSession.addInput(videoInput)
         
-        // 音声のインプット設定
+        // デバイスの初期化・音声のインプット設定
+        let audioDevice: AVCaptureDevice? = AVCaptureDevice.default(for: AVMediaType.audio)
         let audioInput = try! AVCaptureDeviceInput(device: audioDevice!)
         captureSession.addInput(audioInput)
+        
         captureSession.addOutput(fileOutput)
         captureSession.startRunning()
         
@@ -102,10 +95,11 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         activityController.popoverPresentationController?.sourceView = self.view
         activityController.popoverPresentationController?.sourceRect = self.view.frame
         self.present(activityController, animated: true, completion: nil)
-        //アラートを出す
-        //        let alert: UIAlertController = UIAlertController(title: "撮れたで！", message: outputFileURL.absoluteString, preferredStyle:  .alert)
-        //        let okAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
-        //        alert.addAction(okAction)
-        //        self.present(alert, animated: true, completion: nil)
+        
+        let storyboard = UIStoryboard(name: "Preview", bundle: nil)
+        let previewViewController = storyboard.instantiateViewController(withIdentifier: "PreviewViewController") as! PreviewViewController
+        //        videoURL = url
+        //        previewViewController.url = videoURL
+        self.present(previewViewController, animated: true, completion: nil)
     }
 }
