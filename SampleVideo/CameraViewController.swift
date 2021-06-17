@@ -54,7 +54,7 @@ final class CameraViewController: UIViewController {
         
         // ビデオ表示
         let videoLayer : AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        videoLayer.frame = self.view.bounds
+        videoLayer.frame = CGRect(x: 0, y: 0, width: Int(view.bounds.width), height: Int(view.bounds.height - 85))
         videoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.view.layer.addSublayer(videoLayer)
         
@@ -63,7 +63,7 @@ final class CameraViewController: UIViewController {
         self.recordButton.backgroundColor = .white
         self.recordButton.layer.masksToBounds = true
         self.recordButton.layer.cornerRadius = 80 / 2
-        self.recordButton.layer.position = CGPoint(x: self.view.bounds.width / 2, y:self.view.bounds.height - 120)
+        self.recordButton.layer.position = CGPoint(x: self.view.bounds.width / 2, y:self.view.bounds.height - 150)
         self.recordButton.addTarget(self, action: #selector(self.tappedRecordButton(sender:)), for: .touchUpInside)
         self.view.addSubview(recordButton)
     }

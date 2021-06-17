@@ -35,7 +35,7 @@ final class PreviewViewController: UIViewController {
         
         playerController = AVPlayerViewController()
         playerController?.videoGravity = .resizeAspectFill
-        playerController?.view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - 100)
+        playerController?.view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height - 85)
         playerController?.showsPlaybackControls = false
         playerController?.player = player!
         self.addChild(playerController!)
