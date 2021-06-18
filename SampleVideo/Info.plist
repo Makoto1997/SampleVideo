@@ -24,6 +24,8 @@
 	<string>撮影に使用します。</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>撮影に使用します。</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>アルバムを使用します。</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

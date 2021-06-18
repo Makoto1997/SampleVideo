@@ -34,6 +34,9 @@
                                                     <imageReference key="image" image="video.fill.badge.plus" catalog="system" symbolScale="large"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default" weight="black"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="openAlbum:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="KoD-vN-R1L"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lpK-ph-XQG">
                                                 <rect key="frame" x="314" y="0.0" width="60" height="60"/>
