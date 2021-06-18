@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import AudioToolbox
 
 final class CameraViewController: UIViewController {
     
@@ -73,15 +74,26 @@ final class CameraViewController: UIViewController {
         if self.fileOutput.isRecording {
             // 録画終了
             fileOutput.stopRecording()
-            
             self.recordButton.backgroundColor = .white
+            //録画終了サウンド
+            var soundIdRing:SystemSoundID = 1118
+            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
+                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
+                AudioServicesPlaySystemSound(soundIdRing)
+            }
+            
         } else {
             // 録画開始
             let tempDirectory: URL = URL(fileURLWithPath: NSTemporaryDirectory())
             let fileURL: URL = tempDirectory.appendingPathComponent("mytemp1.mov")
             fileOutput.startRecording(to: fileURL, recordingDelegate: self)
-            
             self.recordButton.backgroundColor = .red
+            //録画開始サウンド
+            var soundIdRing:SystemSoundID = 1117
+            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
+                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
+                AudioServicesPlaySystemSound(soundIdRing)
+            }
         }
     }
     
