@@ -84,6 +84,11 @@ final class CameraViewController: UIViewController {
             self.recordButton.backgroundColor = .red
         }
     }
+    
+    @IBAction func openAlbum(_ sender: Any) {
+        
+        album()
+    }
 }
 
 extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
@@ -93,6 +98,43 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         let storyboard = UIStoryboard(name: "Preview", bundle: nil)
         let previewViewController = storyboard.instantiateViewController(withIdentifier: "PreviewViewController") as! PreviewViewController
         videoURL = outputFileURL
+        previewViewController.url = videoURL
+        self.present(previewViewController, animated: true, completion: nil)
+    }
+}
+
+extension CameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func album() {
+        //動画のみが閲覧できるアルバムを起動。
+        let imagePickerController = UIImagePickerController()
+        //デリゲートを指定する。
+        imagePickerController.delegate = self
+        //タイプはアルバム。
+        imagePickerController.sourceType = .savedPhotosAlbum
+        //動画だけを抽出。
+        imagePickerController.mediaTypes = ["public.movie"]
+        //編集不可にする。
+        imagePickerController.allowsEditing = false
+        //インスタンスを出力。
+        self.present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        //アルバムを閉じる。
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        let mediaURL = info[.mediaURL] as? URL
+        videoURL = mediaURL
+        
+        picker.dismiss(animated: true, completion: nil)
+        
+        //値を渡しながら画面遷移。
+        let storyboard = UIStoryboard(name: "Preview", bundle: nil)
+        let previewViewController = storyboard.instantiateViewController(withIdentifier: "PreviewViewController") as! PreviewViewController
         previewViewController.url = videoURL
         self.present(previewViewController, animated: true, completion: nil)
     }
