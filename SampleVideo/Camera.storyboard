@@ -38,6 +38,21 @@
                                                     <action selector="openAlbum:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="KoD-vN-R1L"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7jw-4A-kup">
+                                                <rect key="frame" x="157" y="0.0" width="60" height="60"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="7jw-4A-kup" secondAttribute="height" multiplier="1:1" id="7dN-MV-ZJo"/>
+                                                </constraints>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <imageReference key="image" image="bolt.fill" catalog="system" symbolScale="large"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="black"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="flash:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="QCT-8o-WI8"/>
+                                                </connections>
+                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lpK-ph-XQG">
                                                 <rect key="frame" x="314" y="0.0" width="60" height="60"/>
                                                 <constraints>
@@ -72,6 +87,11 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="8ac-SR-YF8" secondAttribute="trailing" id="k9e-3D-N8D"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="albumButton" destination="iei-kv-vMd" id="eeH-6B-K0j"/>
+                        <outlet property="flashButton" destination="7jw-4A-kup" id="PVH-cP-gQr"/>
+                        <outlet property="switchingButton" destination="lpK-ph-XQG" id="SfT-KT-HJu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -79,6 +99,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="bolt.fill" catalog="system" width="101" height="128"/>
         <image name="camera.rotate.fill" catalog="system" width="128" height="94"/>
         <image name="video.fill.badge.plus" catalog="system" width="128" height="88"/>
         <systemColor name="systemBackgroundColor">

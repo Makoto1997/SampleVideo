@@ -11,6 +11,9 @@ import AudioToolbox
 
 final class CameraViewController: UIViewController {
     
+    @IBOutlet weak var albumButton: UIButton!
+    @IBOutlet weak var flashButton: UIButton!
+    @IBOutlet weak var switchingButton: UIButton!
     // 入力デバイスから出力へのデータの流れを管理するクラス
     // セッションのインスタンス化
     private let captureSession = AVCaptureSession()
@@ -75,6 +78,9 @@ final class CameraViewController: UIViewController {
             // 録画終了
             fileOutput.stopRecording()
             self.recordButton.backgroundColor = .white
+            self.albumButton.isHidden = false
+            self.flashButton.isHidden = false
+            self.switchingButton.isHidden = false
             //録画終了サウンド
             var soundIdRing:SystemSoundID = 1118
             if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
@@ -88,6 +94,9 @@ final class CameraViewController: UIViewController {
             let fileURL: URL = tempDirectory.appendingPathComponent("mytemp1.mov")
             fileOutput.startRecording(to: fileURL, recordingDelegate: self)
             self.recordButton.backgroundColor = .red
+            self.albumButton.isHidden = true
+            self.flashButton.isHidden = true
+            self.switchingButton.isHidden = true
             //録画開始サウンド
             var soundIdRing:SystemSoundID = 1117
             if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
@@ -95,6 +104,10 @@ final class CameraViewController: UIViewController {
                 AudioServicesPlaySystemSound(soundIdRing)
             }
         }
+    }
+    
+    @IBAction func flash(_ sender: Any) {
+        
     }
     
     @IBAction func openAlbum(_ sender: Any) {
