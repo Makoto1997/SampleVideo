@@ -13,7 +13,7 @@ final class CameraViewController: UIViewController {
     
     @IBOutlet weak var albumButton: UIButton!
     @IBOutlet weak var flashButton: UIButton!
-    @IBOutlet weak var switchingButton: UIButton!
+    @IBOutlet weak var changeCameraButton: UIButton!
     // 入力デバイスから出力へのデータの流れを管理するクラス
     // セッションのインスタンス化
     private let captureSession = AVCaptureSession()
@@ -24,6 +24,7 @@ final class CameraViewController: UIViewController {
     var mainCamera: AVCaptureDevice?
     // インカメの管理オブジェクトの作成
     var innerCamera: AVCaptureDevice?
+    
     // 現在使用しているカメラデバイスの管理オブジェクトの作成
     var currentDevice: AVCaptureDevice?
     // Capture Preview
@@ -80,7 +81,7 @@ final class CameraViewController: UIViewController {
             self.recordButton.backgroundColor = .white
             self.albumButton.isHidden = false
             self.flashButton.isHidden = false
-            self.switchingButton.isHidden = false
+            self.changeCameraButton.isHidden = false
             //録画終了サウンド
             var soundIdRing:SystemSoundID = 1118
             if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
@@ -96,7 +97,7 @@ final class CameraViewController: UIViewController {
             self.recordButton.backgroundColor = .red
             self.albumButton.isHidden = true
             self.flashButton.isHidden = true
-            self.switchingButton.isHidden = true
+            self.changeCameraButton.isHidden = true
             //録画開始サウンド
             var soundIdRing:SystemSoundID = 1117
             if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
@@ -106,13 +107,20 @@ final class CameraViewController: UIViewController {
         }
     }
     
-    @IBAction func flash(_ sender: Any) {
-        
-    }
+    
     
     @IBAction func openAlbum(_ sender: Any) {
         
         album()
+    }
+    
+    @IBAction func flash(_ sender: Any) {
+        
+    }
+    
+    @IBAction func changeCamera(_ sender: Any) {
+        
+        
     }
 }
 
