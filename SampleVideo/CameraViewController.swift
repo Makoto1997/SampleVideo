@@ -15,24 +15,17 @@ final class CameraViewController: UIViewController {
     @IBOutlet weak var flashButton: UIButton!
     @IBOutlet weak var changeCameraButton: UIButton!
     // 入力デバイスから出力へのデータの流れを管理するクラス
-    // セッションのインスタンス化
     private let captureSession = AVCaptureSession()
-    // 出力形式を管理
-    let fileOutput = AVCaptureMovieFileOutput()
-    // カメラデバイスそのものを管理するオブジェクトの作成
-    // メインカメラの管理オブジェクトの作成
-    var mainCamera: AVCaptureDevice?
-    // インカメの管理オブジェクトの作成
-    var innerCamera: AVCaptureDevice?
-    
     // 現在使用しているカメラデバイスの管理オブジェクトの作成
     var currentDevice: AVCaptureDevice?
-    // Capture Preview
+    // ビデオを表示するためのサブクラス
     var capturePreviewLayer: AVCaptureVideoPreviewLayer?
+    // 出力形式を管理
+    let fileOutput = AVCaptureMovieFileOutput()
+    //ビデオのURL
+    var url: URL?
     
     private var recordButton: UIButton!
-    
-    var videoURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,8 +123,8 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         
         let storyboard = UIStoryboard(name: "Preview", bundle: nil)
         let previewViewController = storyboard.instantiateViewController(withIdentifier: "PreviewViewController") as! PreviewViewController
-        videoURL = outputFileURL
-        previewViewController.url = videoURL
+        url = outputFileURL
+        previewViewController.videoURL = url
         self.present(previewViewController, animated: true, completion: nil)
     }
 }
@@ -161,14 +154,14 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         let mediaURL = info[.mediaURL] as? URL
-        videoURL = mediaURL
+        url = mediaURL
         
         picker.dismiss(animated: true, completion: nil)
         
         //値を渡しながら画面遷移。
         let storyboard = UIStoryboard(name: "Preview", bundle: nil)
         let previewViewController = storyboard.instantiateViewController(withIdentifier: "PreviewViewController") as! PreviewViewController
-        previewViewController.url = videoURL
+        previewViewController.videoURL = url
         self.present(previewViewController, animated: true, completion: nil)
     }
 }
