@@ -16,12 +16,13 @@ final class CameraViewController: UIViewController {
     @IBOutlet weak var changeCameraButton: UIButton!
     // 入力デバイスから出力へのデータの流れを管理するクラス
     private let captureSession = AVCaptureSession()
-    // 現在使用しているカメラデバイスの管理オブジェクトの作成
-    var currentDevice: AVCaptureDevice?
     // ビデオを表示するためのサブクラス
     var capturePreviewLayer: AVCaptureVideoPreviewLayer?
     // 出力形式を管理
     let fileOutput = AVCaptureMovieFileOutput()
+    // デバイスの初期化
+    let videoDevice = AVCaptureDevice.default(for: AVMediaType.video)
+    let audioDevice = AVCaptureDevice.default(for: AVMediaType.audio)
     //ビデオのURL
     var url: URL?
     
@@ -37,13 +38,11 @@ final class CameraViewController: UIViewController {
     // デバイスの設定
     private func setUpCamera() {
         
-        // デバイスの初期化・ビデオのインプット設定
-        let videoDevice: AVCaptureDevice? = AVCaptureDevice.default(for: AVMediaType.video)
+        // ビデオのインプット設定
         let videoInput: AVCaptureDeviceInput = try! AVCaptureDeviceInput(device: videoDevice!)
         captureSession.addInput(videoInput)
         
-        // デバイスの初期化・音声のインプット設定
-        let audioDevice: AVCaptureDevice? = AVCaptureDevice.default(for: AVMediaType.audio)
+        // 音声のインプット設定
         let audioInput = try! AVCaptureDeviceInput(device: audioDevice!)
         captureSession.addInput(audioInput)
         
@@ -100,7 +99,22 @@ final class CameraViewController: UIViewController {
         }
     }
     
-    
+    func flashSwitch() {
+        
+        guard let device = videoDevice else {
+            return
+        }
+        if device.hasTorch {
+            let torchOn = !device.isTorchActive
+            do {
+                try device.lockForConfiguration()
+            } catch {
+                return
+            }
+            device.torchMode = torchOn ? .on : .off
+            device.unlockForConfiguration()
+        }
+    }
     
     @IBAction func openAlbum(_ sender: Any) {
         
@@ -109,6 +123,7 @@ final class CameraViewController: UIViewController {
     
     @IBAction func flash(_ sender: Any) {
         
+        flashSwitch()
     }
     
     @IBAction func changeCamera(_ sender: Any) {
