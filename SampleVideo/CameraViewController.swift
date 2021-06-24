@@ -55,6 +55,9 @@ final class CameraViewController: UIViewController {
         videoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.view.layer.addSublayer(videoLayer)
         
+        //最大録画時間
+        fileOutput.maxRecordedDuration = CMTimeMake(value: 15, timescale: 1)
+        
         // 録画ボタン
         self.recordButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
         self.recordButton.backgroundColor = .white
@@ -80,7 +83,6 @@ final class CameraViewController: UIViewController {
                 AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
                 AudioServicesPlaySystemSound(soundIdRing)
             }
-            
         } else {
             // 録画開始
             let tempDirectory: URL = URL(fileURLWithPath: NSTemporaryDirectory())
@@ -100,10 +102,9 @@ final class CameraViewController: UIViewController {
     }
     
     func flashSwitch() {
+        // LED点灯・消灯
+        guard let device = videoDevice else { return }
         
-        guard let device = videoDevice else {
-            return
-        }
         if device.hasTorch {
             let torchOn = !device.isTorchActive
             do {
