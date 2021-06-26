@@ -78,11 +78,8 @@ final class CameraViewController: UIViewController {
             self.flashButton.isHidden = false
             self.changeCameraButton.isHidden = false
             //録画終了サウンド
-            var soundIdRing:SystemSoundID = 1118
-            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-                AudioServicesPlaySystemSound(soundIdRing)
-            }
+            let systemSoundPlayer = SystemSoundPlayer()
+            systemSoundPlayer.play(systemSound: .stopRecording)
         } else {
             // 録画開始
             let tempDirectory: URL = URL(fileURLWithPath: NSTemporaryDirectory())
@@ -93,11 +90,8 @@ final class CameraViewController: UIViewController {
             self.flashButton.isHidden = true
             self.changeCameraButton.isHidden = true
             //録画開始サウンド
-            var soundIdRing:SystemSoundID = 1117
-            if let soundUrl = CFBundleCopyResourceURL(CFBundleGetMainBundle(), nil, nil, nil){
-                AudioServicesCreateSystemSoundID(soundUrl, &soundIdRing)
-                AudioServicesPlaySystemSound(soundIdRing)
-            }
+            let systemSoundPlayer = SystemSoundPlayer()
+            systemSoundPlayer.play(systemSound: .startRecording)
         }
     }
     
