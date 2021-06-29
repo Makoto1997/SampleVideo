@@ -7,7 +7,6 @@
 
 import UIKit
 import AVFoundation
-import AudioToolbox
 
 final class CameraViewController: UIViewController {
     
@@ -16,7 +15,6 @@ final class CameraViewController: UIViewController {
     @IBOutlet weak var changeCameraButton: UIButton!
     
     var videoDevice: AVCaptureDevice?
-    // 出力形式を管理
     let fileOutput = AVCaptureMovieFileOutput()
     var url: URL?
     
@@ -49,6 +47,16 @@ final class CameraViewController: UIViewController {
         
         //最大録画時間
         fileOutput.maxRecordedDuration = CMTimeMake(value: 15, timescale: 1)
+        //手ぶれ補正
+        if(fileOutput.connection(with: AVMediaType.video)?.isVideoStabilizationSupported)! {
+            if #available(iOS 13.0, *) {
+                // iOS13以降だと「cinematicExtended」というさらなる手ブレ補正モードが存在する
+                fileOutput.connection(with: AVMediaType.video)?.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.cinematicExtended
+            } else {
+                // そうでなければ「cinematic」モードを指定する
+                fileOutput.connection(with: AVMediaType.video)?.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.cinematic
+            }
+        }
         
         //ビデオ品質
         captureSession.beginConfiguration()
