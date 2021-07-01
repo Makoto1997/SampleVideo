@@ -16,6 +16,7 @@ final class CameraViewController: UIViewController {
     
     var videoDevice: AVCaptureDevice?
     let fileOutput = AVCaptureMovieFileOutput()
+    private var baseZoomFanctor: CGFloat = 1.0
     var url: URL?
     
     private var recordButton: UIButton!
@@ -74,6 +75,7 @@ final class CameraViewController: UIViewController {
         videoLayer.frame = CGRect(x: 0, y: 0, width: Int(view.bounds.width), height: Int(view.bounds.height - 85))
         videoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.view.layer.addSublayer(videoLayer)
+        self.setupPinchGestureRecognizer()
         
         // 録画ボタン
         self.recordButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
@@ -102,6 +104,12 @@ final class CameraViewController: UIViewController {
         }
     }
     
+    private func setupPinchGestureRecognizer() {
+        // pinch recognizer for zooming
+        let pinchGestureRecognizer: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.onPinchGesture(_:)))
+        self.view.addGestureRecognizer(pinchGestureRecognizer)
+    }
+    
     func flashSwitch() {
         // LED点灯・消灯
         guard let device = videoDevice else { return }
@@ -117,6 +125,31 @@ final class CameraViewController: UIViewController {
             device.unlockForConfiguration()
         }
     }
+    
+    @objc private func onPinchGesture(_ sender: UIPinchGestureRecognizer) {
+        
+            if sender.state == .began {
+                self.baseZoomFanctor = (self.videoDevice?.videoZoomFactor)!
+            }
+
+            let tempZoomFactor: CGFloat = self.baseZoomFanctor * sender.scale
+            let newZoomFactdor: CGFloat
+            if tempZoomFactor < (self.videoDevice?.minAvailableVideoZoomFactor)! {
+                newZoomFactdor = (self.videoDevice?.minAvailableVideoZoomFactor)!
+            } else if (self.videoDevice?.maxAvailableVideoZoomFactor)! < tempZoomFactor {
+                newZoomFactdor = (self.videoDevice?.maxAvailableVideoZoomFactor)!
+            } else {
+                newZoomFactdor = tempZoomFactor
+            }
+
+            do {
+                try self.videoDevice?.lockForConfiguration()
+                self.videoDevice?.ramp(toVideoZoomFactor: newZoomFactdor, withRate: 30.0)
+                self.videoDevice?.unlockForConfiguration()
+            } catch {
+                print("Failed to change zoom factor.")
+            }
+        }
     
     @objc func tappedRecordButton(sender: UIButton) {
         
