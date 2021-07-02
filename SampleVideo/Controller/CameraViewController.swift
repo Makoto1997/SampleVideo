@@ -105,7 +105,7 @@ final class CameraViewController: UIViewController {
     }
     
     private func setupPinchGestureRecognizer() {
-        // pinch recognizer for zooming
+        // ピンチイン・ピンチアウトのジェスチャー
         let pinchGestureRecognizer: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.onPinchGesture(_:)))
         self.view.addGestureRecognizer(pinchGestureRecognizer)
     }
@@ -127,29 +127,31 @@ final class CameraViewController: UIViewController {
     }
     
     @objc private func onPinchGesture(_ sender: UIPinchGestureRecognizer) {
-        
-            if sender.state == .began {
-                self.baseZoomFanctor = (self.videoDevice?.videoZoomFactor)!
-            }
-
-            let tempZoomFactor: CGFloat = self.baseZoomFanctor * sender.scale
-            let newZoomFactdor: CGFloat
-            if tempZoomFactor < (self.videoDevice?.minAvailableVideoZoomFactor)! {
-                newZoomFactdor = (self.videoDevice?.minAvailableVideoZoomFactor)!
-            } else if (self.videoDevice?.maxAvailableVideoZoomFactor)! < tempZoomFactor {
-                newZoomFactdor = (self.videoDevice?.maxAvailableVideoZoomFactor)!
-            } else {
-                newZoomFactdor = tempZoomFactor
-            }
-
-            do {
-                try self.videoDevice?.lockForConfiguration()
-                self.videoDevice?.ramp(toVideoZoomFactor: newZoomFactdor, withRate: 30.0)
-                self.videoDevice?.unlockForConfiguration()
-            } catch {
-                print("Failed to change zoom factor.")
-            }
+        //scaleにてピンチジェスチャー開始時を基準とした拡縮倍率
+        //baseZoomFanctorにピンチジェスチャー開始時の拡縮倍率を格納
+        if sender.state == .began {
+            self.baseZoomFanctor = (self.videoDevice?.videoZoomFactor)!
         }
+        //基準の拡縮倍率とジェスチャーによる拡縮倍率をかけ合わせ、新しい拡縮倍率を計算(tempZoomFactor)
+        let tempZoomFactor: CGFloat = self.baseZoomFanctor * sender.scale
+        //拡縮倍率の下限と上限の範囲内に収まるように調整する(newZoomFactdor)
+        let newZoomFactdor: CGFloat
+        if tempZoomFactor < (self.videoDevice?.minAvailableVideoZoomFactor)! {
+            newZoomFactdor = (self.videoDevice?.minAvailableVideoZoomFactor)!
+        } else if (self.videoDevice?.maxAvailableVideoZoomFactor)! < tempZoomFactor {
+            newZoomFactdor = (self.videoDevice?.maxAvailableVideoZoomFactor)!
+        } else {
+            newZoomFactdor = tempZoomFactor
+        }
+        //newZoomFactdorを新たな拡縮倍率として、ズーム処理を行う
+        do {
+            try self.videoDevice?.lockForConfiguration()
+            self.videoDevice?.ramp(toVideoZoomFactor: newZoomFactdor, withRate: 30.0)
+            self.videoDevice?.unlockForConfiguration()
+        } catch {
+            print("Failed to change zoom factor.")
+        }
+    }
     
     @objc func tappedRecordButton(sender: UIButton) {
         
