@@ -28,6 +28,11 @@ final class CameraViewController: UIViewController {
         self.setUpCamera()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     // デバイスの設定
     private func setUpCamera() {
         
@@ -105,7 +110,7 @@ final class CameraViewController: UIViewController {
     }
     
     private func setupPinchGestureRecognizer() {
-        // ピンチイン・ピンチアウトのジェスチャー
+        // ズーム用のピンチイン・ピンチアウトのジェスチャー
         let pinchGestureRecognizer: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.onPinchGesture(_:)))
         self.view.addGestureRecognizer(pinchGestureRecognizer)
     }
@@ -149,7 +154,7 @@ final class CameraViewController: UIViewController {
             self.videoDevice?.ramp(toVideoZoomFactor: newZoomFactdor, withRate: 30.0)
             self.videoDevice?.unlockForConfiguration()
         } catch {
-            print("Failed to change zoom factor.")
+            print("ズーム率の変更に失敗しました。")
         }
     }
     
