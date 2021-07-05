@@ -80,7 +80,7 @@ final class CameraViewController: UIViewController {
         videoLayer.frame = CGRect(x: 0, y: 0, width: Int(view.bounds.width), height: Int(view.bounds.height - 85))
         videoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.view.layer.addSublayer(videoLayer)
-        self.setupPinchGestureRecognizer()
+        self.setupGestureRecognizer()
         
         // 録画ボタン
         self.recordButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
@@ -109,9 +109,12 @@ final class CameraViewController: UIViewController {
         }
     }
     
-    private func setupPinchGestureRecognizer() {
-        // ズーム用のピンチイン・ピンチアウトのジェスチャー
-        let pinchGestureRecognizer: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.onPinchGesture(_:)))
+    private func setupGestureRecognizer() {
+        // フォーカス用のタップジェスチャー
+        let tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapGesture(_:)))
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+        // ズーム用のピンチイン・ピンチアウトジェスチャー
+        let pinchGestureRecognizer: UIPinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(self.pinchGesture(_:)))
         self.view.addGestureRecognizer(pinchGestureRecognizer)
     }
     
@@ -131,7 +134,19 @@ final class CameraViewController: UIViewController {
         }
     }
     
-    @objc private func onPinchGesture(_ sender: UIPinchGestureRecognizer) {
+    @objc private func tapGesture(_ sender: UITapGestureRecognizer) {
+        
+        do {
+            try videoDevice?.lockForConfiguration()
+            videoDevice?.focusMode = AVCaptureDevice.FocusMode.autoFocus
+            videoDevice?.unlockForConfiguration()
+        }
+        catch {
+            print("error")
+        }
+    }
+    
+    @objc private func pinchGesture(_ sender: UIPinchGestureRecognizer) {
         //scaleにてピンチジェスチャー開始時を基準とした拡縮倍率
         //baseZoomFanctorにピンチジェスチャー開始時の拡縮倍率を格納
         if sender.state == .began {
