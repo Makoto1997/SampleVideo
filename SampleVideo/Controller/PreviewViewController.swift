@@ -14,6 +14,8 @@ final class PreviewViewController: UIViewController {
     var player: AVPlayer?
     var videoURL: URL?
     
+    private var backButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,7 +27,7 @@ final class PreviewViewController: UIViewController {
         videoPlayer(videoURL: videoURL!)
     }
     
-    func videoPlayer(videoURL: URL) {
+    private func videoPlayer(videoURL: URL) {
         //ViewControllerを親から取り除く
         playerController?.removeFromParent()
         player = nil
@@ -40,13 +42,21 @@ final class PreviewViewController: UIViewController {
         playerController?.player = player!
         self.addChild(playerController!)
         self.view.addSubview((playerController?.view)!)
-        
+        self.setBackButton()
         player?.play()
         //
         _ = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player?.currentItem, queue: .main) { [weak playerController] _ in
             playerController?.player?.seek(to: CMTime.zero)
             playerController?.player?.play()
         }
+    }
+    
+    private func setBackButton() {
+        
+        self.backButton = UIButton(frame: CGRect(x: 20.0, y: 40.0, width: 50.0, height: 50.0))
+        self.backButton.backgroundColor = .blue
+        self.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        self.view.addSubview(backButton)
     }
     
     @IBAction func next(_ sender: Any) {
@@ -57,5 +67,10 @@ final class PreviewViewController: UIViewController {
         let postViewController = storyboard.instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
         postViewController.finishedURL = videoURL
         self.present(postViewController, animated: true, completion: nil)
+    }
+    
+    @objc func back(){
+        
+        self.dismiss(animated: true, completion: nil)
     }
 }

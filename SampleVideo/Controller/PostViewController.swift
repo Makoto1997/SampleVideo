@@ -12,9 +12,20 @@ class PostViewController: UIViewController {
     
     var finishedURL: URL?
     
+    private var backButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setBackButton()
+    }
+    
+    private func setBackButton() {
+        
+        self.backButton = UIButton(frame: CGRect(x: 20.0, y: 40.0, width: 50.0, height: 50.0))
+        self.backButton.backgroundColor = .blue
+        self.backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        self.view.addSubview(backButton)
     }
     
     @IBAction func save(_ sender: Any) {
@@ -53,5 +64,10 @@ class PostViewController: UIViewController {
         let okAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func back(){
+        
+        self.dismiss(animated: true, completion: nil)
     }
 }
