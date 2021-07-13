@@ -50,7 +50,7 @@
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="black"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="flash:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="MKv-eW-7pC"/>
+                                                    <action selector="torch:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="GKK-dq-Lfa"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lpK-ph-XQG">
@@ -93,7 +93,7 @@
                     <connections>
                         <outlet property="albumButton" destination="iei-kv-vMd" id="eeH-6B-K0j"/>
                         <outlet property="changeCameraButton" destination="lpK-ph-XQG" id="TW3-7y-0Bu"/>
-                        <outlet property="flashButton" destination="7jw-4A-kup" id="PVH-cP-gQr"/>
+                        <outlet property="torchButton" destination="7jw-4A-kup" id="5Le-Cp-Zpd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

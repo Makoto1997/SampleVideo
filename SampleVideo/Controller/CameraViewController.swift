@@ -11,7 +11,7 @@ import AVFoundation
 final class CameraViewController: UIViewController {
     
     @IBOutlet weak var albumButton: UIButton!
-    @IBOutlet weak var flashButton: UIButton!
+    @IBOutlet weak var torchButton: UIButton!
     @IBOutlet weak var changeCameraButton: UIButton!
     
     var videoDevice: AVCaptureDevice?
@@ -71,9 +71,6 @@ final class CameraViewController: UIViewController {
         } else if captureSession.canSetSessionPreset(.high) {
             captureSession.sessionPreset = .high
         }
-        captureSession.commitConfiguration()
-        
-        captureSession.startRunning()
         
         // ビデオ表示
         let videoLayer : AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -81,6 +78,9 @@ final class CameraViewController: UIViewController {
         videoLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
         self.view.layer.addSublayer(videoLayer)
         self.setupGestureRecognizer()
+        
+        captureSession.commitConfiguration()
+        captureSession.startRunning()
         
         // 録画ボタン
         self.recordButton = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
@@ -118,7 +118,7 @@ final class CameraViewController: UIViewController {
         self.view.addGestureRecognizer(pinchGestureRecognizer)
     }
     
-    func flashSwitch() {
+    func torchSwitch() {
         // LED点灯・消灯
         guard let device = videoDevice else { return }
         
@@ -180,7 +180,7 @@ final class CameraViewController: UIViewController {
             fileOutput.stopRecording()
             self.recordButton.backgroundColor = .white
             self.albumButton.isHidden = false
-            self.flashButton.isHidden = false
+            self.torchButton.isHidden = false
             self.changeCameraButton.isHidden = false
             //録画終了サウンド
             let systemSoundPlayer = SystemSoundPlayer()
@@ -192,7 +192,7 @@ final class CameraViewController: UIViewController {
             fileOutput.startRecording(to: fileURL, recordingDelegate: self)
             self.recordButton.backgroundColor = .red
             self.albumButton.isHidden = true
-            self.flashButton.isHidden = true
+            self.torchButton.isHidden = true
             self.changeCameraButton.isHidden = true
             //録画開始サウンド
             let systemSoundPlayer = SystemSoundPlayer()
@@ -205,9 +205,9 @@ final class CameraViewController: UIViewController {
         album()
     }
     
-    @IBAction func flash(_ sender: Any) {
+    @IBAction func torch(_ sender: Any) {
         
-        flashSwitch()
+        torchSwitch()
     }
     
     @IBAction func changeCamera(_ sender: Any) {
